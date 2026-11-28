@@ -307,9 +307,9 @@ func TestNotifyEdgeCases(t *testing.T) {
 
 	rec, url := newRecorder(t)
 	webhook, err := refresher.NewWebhook(refresher.WebhookOptions{
-		URL: url,
+		URL:    url,
 		Secret: "s3cret",
-		Now: func() time.Time { return time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC) },
+		Now:    func() time.Time { return time.Date(2026, 1, 1, 0, 0, 0, 0, time.UTC) },
 	})
 	require.NoError(t, err)
 
@@ -331,9 +331,9 @@ func TestNotifyEdgeCases(t *testing.T) {
 	// would reject it.
 	rec2, url2 := newRecorder(t)
 	wh2, err := refresher.NewWebhook(refresher.WebhookOptions{
-		URL: url2,
+		URL:    url2,
 		Secret: "",
-		Now: func() time.Time { return time.Date(2026, 2, 1, 0, 0, 0, 0, time.UTC) },
+		Now:    func() time.Time { return time.Date(2026, 2, 1, 0, 0, 0, 0, time.UTC) },
 	})
 	require.NoError(t, err)
 	assert.NoError(t, wh2.Notify(context.Background(), refresher.Change{
@@ -348,19 +348,19 @@ func TestNotifyEdgeCases(t *testing.T) {
 	// A pre-set ChangedAt is preserved.
 	rec3, url3 := newRecorder(t)
 	wh3, err := refresher.NewWebhook(refresher.WebhookOptions{
-		URL: url3,
+		URL:    url3,
 		Secret: "s3cret",
-		Now: func() time.Time { return time.Date(2026, 3, 1, 0, 0, 0, 0, time.UTC) },
+		Now:    func() time.Time { return time.Date(2026, 3, 1, 0, 0, 0, 0, time.UTC) },
 	})
 	require.NoError(t, err)
 	preset := time.Date(2025, 12, 31, 23, 59, 59, 0, time.UTC)
 	assert.NoError(t, wh3.Notify(context.Background(), refresher.Change{
-		ContractID:  "CDZZXVGUCLBUTE3WDD6TF2NXPTBPOYTVPPBBIZMSPVIQLUG226XJ4PAN",
-		Network:     "testnet",
-		OldWasmHash: "old",
-		NewWasmHash: "new",
+		ContractID:   "CDZZXVGUCLBUTE3WDD6TF2NXPTBPOYTVPPBBIZMSPVIQLUG226XJ4PAN",
+		Network:      "testnet",
+		OldWasmHash:  "old",
+		NewWasmHash:  "new",
 		InterfaceURL: "/api/contracts/x",
-		ChangedAt:   preset,
+		ChangedAt:    preset,
 	}))
 	var got3 refresher.Change
 	require.NoError(t, json.Unmarshal(rec3.all()[0].body, &got3))

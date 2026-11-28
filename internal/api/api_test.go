@@ -1729,27 +1729,27 @@ func TestSetReadOnlyEdgeCases(t *testing.T) {
 	s := api.NewServer(reg, log)
 
 	tests := []struct {
-		name             string
-		toggle           bool
-		writesRefused   bool
-		readStatus       int
-		writeStatus      int
+		name                string
+		toggle              bool
+		writesRefused       bool
+		readStatus          int
+		writeStatus         int
 		writeErrorToContain string
 	}{
 		{
-			name:             "read-only off lets writes through",
-			toggle:          false,
-			writesRefused:   false,
-			readStatus:       http.StatusOK,
-			writeStatus:      http.StatusBadRequest,
+			name:                "read-only off lets writes through",
+			toggle:              false,
+			writesRefused:       false,
+			readStatus:          http.StatusOK,
+			writeStatus:         http.StatusBadRequest,
 			writeErrorToContain: "Bearer",
 		},
 		{
-			name:             "read-only on refuses writes",
-			toggle:          true,
-			writesRefused:   true,
-			readStatus:       http.StatusOK,
-			writeStatus:      http.StatusMethodNotAllowed,
+			name:                "read-only on refuses writes",
+			toggle:              true,
+			writesRefused:       true,
+			readStatus:          http.StatusOK,
+			writeStatus:         http.StatusMethodNotAllowed,
 			writeErrorToContain: "read-only",
 		},
 	}
